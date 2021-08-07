@@ -3,7 +3,7 @@
 #include "../include/sge.h"
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <assert.h>
 void createVAO(sge_object_prototype* dest){
 	glGenVertexArrays(1, &dest->m_vao); // allocate a vertex array object
 }
@@ -23,11 +23,24 @@ void createVBOS(
 	}
 }
 
+
+void bindObject(sge_object_prototype* me){
+	glBindVertexArray(dest->m_vao);
+	{unsigned int i=0, j=0;
+		for(i=0; i < SGE_OBJECT_MAX_VBOS){
+			
+		}
+	}
+}
+
+
 void initArrayBuffer(
 	sge_object_prototype* dest,
 	uint_t index, //index into the vbo array to initialize
 	uint_t elems,
-	uint_t vboflags
+	uint_t is_static, //use GL_DYNAMIC_DRAW or GL_STATIC_DRAW
+	uint_t vboflags,
+	void* init_data //data to use for initialization.
 ){
 	if(index > SGE_OBJECT_MAX_VBOS){
 		printf("<ERROR> invalid vbo index %u", index);
@@ -37,14 +50,68 @@ void initArrayBuffer(
 		printf("<ERROR> cannot initialize null VBO.");
 		exit(1);
 	}
+	if(elems == 0){
+		printf("<ERROR> cannot init VBO with zero elements.");
+		exit(1);
+	}
 	/*We have a valid index and VBO in that index, now we set it up.*/
-	if(vboflags != 1 &&
-		vboflags != 2 &&
-		vboflags != 4 &&
-		vboflags != 8 &&
-		vboflags != 16 
-	){
+	glBindBuffer(GL_ARRAY_BUFFER, dest->m_vbos[index]);
+	if(vboflags == 1 || vboflags == 16) /*float or int. Assumed to be the same size... because they are in OpenGL.*/
+	{
+		
+		/*assert(sizeof(float) == sizeof(int));*/
+		glBufferData(
+			GL_ARRAY_BUFFER, 
+			elems* sizeof(float), init_data, is_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW
+		);
+	} else if(vboflags == 2){
+		glBufferData(
+			GL_ARRAY_BUFFER, 
+			elems* sizeof(float) * 2, init_data, is_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW
+		);
+	} else if(vboflags == 4){
+		glBufferData(
+			GL_ARRAY_BUFFER, 
+			elems* sizeof(float) * 4, init_data, is_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW
+		);
+	} else if(vboflags == 8){
+		glBufferData(
+			GL_ARRAY_BUFFER, 
+			elems* sizeof(float) * 16, init_data, is_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW
+		);
+		/*TODO: setup vertex attrib pointers.*/
+	} else {
 		printf("<ERROR> invalid vboflags %u", vboflags);
 		exit(1);
 	}
+}
+
+
+
+void initElementArrayBuffer( /*Index buffer.*/
+	sge_object_prototype* dest,
+	uint_t index, //index into the vbo array to initialize
+	uint_t elems,
+	uint_t is_static, //use GL_DYNAMIC_DRAW or GL_STATIC_DRAW
+	void* init_data //data to use for initialization.
+){
+	if(index > SGE_OBJECT_MAX_VBOS){
+		printf("<ERROR> invalid vbo index %u", index);
+		exit(1);
+	}
+	if(dest->m_vbos[index] == 0){
+		printf("<ERROR> cannot initialize null VBO.");
+		exit(1);
+	}
+	if(elems == 0){
+		printf("<ERROR> cannot init VBO with zero elements.");
+		exit(1);
+	}
+	/*We have a valid index and VBO in that index, now we set it up.*/
+	glBindBuffer(GL_ARRAY_BUFFER, dest->m_vbos[index]);
+		/*assert(sizeof(float) == sizeof(int));*/
+		glBufferData(
+			GL_ELEMENT_ARRAY_BUFFER, 
+			elems* sizeof(float), init_data, is_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW
+		);
 }
