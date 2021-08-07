@@ -26,6 +26,12 @@ typedef struct {
 typedef struct  {
 	unsigned int m_vao; //Vertex Array Object.
 	unsigned int m_vbos[SGE_OBJECT_MAX_VBOS]; //VBOs
+	unsigned int m_vboflags[SGE_OBJECT_MAX_VBOS]; //VBO flags
+	//1: float property
+	//2: vec2 property
+	//4: vec4 property
+	//8: mat4 property
+	//16: int property
 	unsigned int m_program; //compiled shader program.
 	unsigned int m_shaders[SGE_OBJECT_MAX_SHADERS]; //shaders.
 	void* udata; //user data
