@@ -16,6 +16,8 @@ OBJECTS = $(patsubst src/%.c, obj/%.o, $(SOURCES))
 
 $(TARGET): $(OBJECTS)
 	$(CC) $(CFLAGS) -shared $^ -o $@  -Wno-undef $(LINKYDINK)
+	ar crs sge64.a $^
+	rm -f sge64.o
 
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
