@@ -8,13 +8,14 @@ ifeq ($(UNAME),Linux)
 	LINKYDINK = -lgl -l
 else
 	TARGET = sge64.dll
+	LINKYDINK = -lgdi32 -luser32 -lkernel32 -lopengl32
 endif
 
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(patsubst src/%.c, obj/%.o, $(SOURCES))
 
 $(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) -shared $^ -o $@ -Wl,sge64.def -Wno-undef -lopengl32 lib/glfw/libglfw3.a -lgdi32 -luser32 -lkernel32
+	$(CC) $(CFLAGS) -shared $^ -o $@ -Wl,sge64.def -Wno-undef $(LINKYDINK)
 
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
