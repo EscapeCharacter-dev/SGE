@@ -1,23 +1,24 @@
-CC    = gcc    # GCC/MinGW
-INC    = -I./include -I./lib/glfw -I./lib/glad -I./lib/cjson
+CC	= gcc	# GCC/MinGW
+
+INC	= -I./include -I./lib/glfw -I./lib/glad -I./lib/cjson
 
 CFLAGS = -Wall -Wextra -O4 -DENGINE_BUILD $(INC) -fpic -fvisibility=hidden
 TARGET = sge64.dll
-LINKYDINK = -lopengl32 -lglfw3 -lgdi32 -luser32 -lkernel32 -lmingw32
+LINKYDINK = -lopengl32 -lglfw3 -lgdi32 -luser32 -lkernel32 -lmingw32 -Wl,sge64.def
 
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(patsubst src/%.c, obj/%.o, $(SOURCES))
 
 $(TARGET): $(OBJECTS)
-    $(CC) $(CFLAGS) -shared $(OBJECTS) -o $@ -Wno-undef $(LINKYDINK)
-    $(AR) crs sge64.a $(OBJECTS)
-    rm -f sge64.o
+	$(CC) $(CFLAGS) -shared $(OBJECTS) -o $@ -Wno-undef $(LINKYDINK)
+	$(AR) crs sge64.a $(OBJECTS)
+	rm -f sge64.o
 
 obj/%.o: src/%.c
-    $(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 test: $(TARGET)
-    $(CC) test.c sge64.dll
-    
+	$(CC) test.c sge64.dll
+	
 clean:
-    rm -f src/*.o obj/*.o obj/*.dll obj/*.exe obj/*.so *.a *.so *.out
+	rm -f src/*.o obj/*.o obj/*.dll obj/*.exe obj/*.so *.a *.so *.out
