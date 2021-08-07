@@ -4,13 +4,13 @@ INC	= -I./include -I./lib/glfw -I./lib/glad -I./lib/cjson
 
 CFLAGS = -Wall -Wextra -O4 -DENGINE_BUILD $(INC) -fpic -fvisibility=hidden
 TARGET = sge64.dll
-LINKYDINK = -lopengl32 lib/glfw/libglfw3.a -lgdi32 -luser32 -lkernel32 -Wl,sge64.def
+LINKYDINK = -lopengl32 lib/glfw/libglfw3.a -lgdi32 -luser32 -lkernel32 -lmingw32 -Wl,sge64.def
 
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(patsubst src/%.c, obj/%.o, $(SOURCES))
 
 $(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) -shared $(OBJECTS) -o $@  -Wno-undef $(LINKYDINK)
+	$(CC) $(CFLAGS) -shared $(OBJECTS) -o $@ -Wno-undef $(LINKYDINK)
 	$(AR) crs sge64.a $(OBJECTS)
 	rm -f sge64.o
 
@@ -18,7 +18,7 @@ obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 test: $(TARGET)
-	$(CC) test.c sge64.a -lglfw -lm -ldl
+	$(CC) test.c sge64.dll
 	
 clean:
 	rm -f src/*.o obj/*.o obj/*.dll obj/*.exe obj/*.so *.a *.so *.out

@@ -5,3 +5,4 @@ lib/glfw
 *.so
 *.dll
 *.exe
+*.a
