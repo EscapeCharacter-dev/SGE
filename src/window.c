@@ -1,5 +1,5 @@
+#include <glfw3/glfw3.h>
 #include "glad.h"
-#include "glfw3.h"
 #include "sge.h"
 #include "internal.h"
 #include <pthread.h>
