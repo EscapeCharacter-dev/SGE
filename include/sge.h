@@ -7,26 +7,26 @@
     required version: 0.0.1
     description: Initialization structure
 */
-struct sge_init_struct {
+typedef struct {
     const char *title;
     int         wW; // Window Width
     int         wH; // Window Height
     int         vW; // Viewport Width
     int         vH; // Viewport Height
     bool_t      fs; // Fullscreen
-};
+} sge_init_struct;
 
 /*
 	SGE object prototype.
 */
 
-struct sge_object_prototype {
+typedef struct  {
 	unsigned int m_vao; //Vertex Array Object.
 	unsigned int m_vbos[32]; //VBOs
 	unsigned int m_program; //compiled shader program.
 	unsigned int m_shaders[16]; //shaders.
 	void* udata; //user data
-};
+} sge_object_prototype;
 
 
 
@@ -40,7 +40,7 @@ typedef void    (*sge_update_callback)(uint64_t ticks);
     required version: 0.0.1
     description: Initializes SGE's window
 */
-void sge_init(struct sge_init_struct init_struct);
+void sge_init(sge_init_struct init_struct);
 
 /*
     required version: 0.0.1
