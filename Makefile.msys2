@@ -4,7 +4,7 @@ INC	= -I./include -I./lib/glfw -I./lib/glad -I./lib/cjson
 
 CFLAGS = -Wall -Wextra -O4 -DENGINE_BUILD $(INC) -fpic -fvisibility=hidden
 TARGET = sge64.dll
-LINKYDINK = -lopengl32 -lglfw3 -lgdi32 -luser32 -lkernel32 -lmingw32 -Wl,sge64.def
+LINKYDINK = -lopengl32 -lglfw3 -lgdi32 -luser32 -lkernel32 -lmingw32
 
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(patsubst src/%.c, obj/%.o, $(SOURCES))
