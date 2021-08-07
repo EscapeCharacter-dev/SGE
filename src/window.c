@@ -11,7 +11,7 @@ static void resize(GLFWwindow *window, int w, int h) {
     glViewport(0, 0, w, h);
 }
 
-PUBLIC void sge_init(struct sge_init_struct init_struct) {
+PUBLIC void sge_init(sge_init_struct init_struct) {
     if (window) {
         return;
     }
