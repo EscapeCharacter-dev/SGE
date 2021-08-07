@@ -1,12 +1,13 @@
-#include <glfw3/glfw3.h>
-#include "glad.h"
-#include "sge.h"
+#include <GLFW/glfw3.h>
+#include "../lib/glad/glad.h"
+#include "../include/sge.h"
 #include "internal.h"
 #include <pthread.h>
 
 static GLFWwindow *window = 0;
 
 static void resize(GLFWwindow *window, int w, int h) {
+	(void)window;
     glViewport(0, 0, w, h);
 }
 
@@ -51,7 +52,7 @@ PUBLIC void sge_end(void) {
     if (!window) {
         return;
     }
-    sge_free_shaders();
+    me_free_shaders();
 
     glfwDestroyWindow(window);
     glfwTerminate();
