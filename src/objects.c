@@ -37,4 +37,14 @@ void initArrayBuffer(
 		printf("<ERROR> cannot initialize null VBO.");
 		exit(1);
 	}
+	/*We have a valid index and VBO in that index, now we set it up.*/
+	if(vboflags != 1 &&
+		vboflags != 2 &&
+		vboflags != 4 &&
+		vboflags != 8 &&
+		vboflags != 16 
+	){
+		printf("<ERROR> invalid vboflags %u", vboflags);
+		exit(1);
+	}
 }
