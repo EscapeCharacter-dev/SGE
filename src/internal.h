@@ -9,6 +9,8 @@
 #error unsupported compiler
 #endif
 
+#include "types.h"
+
 /*
     Shader code
 */
