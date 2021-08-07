@@ -96,7 +96,6 @@ PUBLIC void sge_end(void) {
     if (!window) {
         return;
     }
-    sge_free_shaders();
 
     glfwDestroyWindow(window);
     glfwTerminate();
