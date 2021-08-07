@@ -17,3 +17,10 @@ $(TARGET): $(OBJECTS)
 
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -rf obj/*
+	rm sge64.def
+	rm sge64.dll
+	rm test.exe
+	rm test.o
