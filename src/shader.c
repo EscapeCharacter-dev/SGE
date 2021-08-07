@@ -32,7 +32,7 @@ static uint32_t appendp(uint32_t val) {
     return programs_used - 1;
 }
 
-PUBLIC uint32_t sge_load_shader(const char *json_filepath, uint32_t *out_shader_buffer) {
+/*PUBLIC uint32_t sge_load_shader(const char *json_filepath, uint32_t *out_shader_buffer) {
     FILE *fp = fopen(json_filepath, "r");
     fseek(fp, 0, SEEK_END);
     size_t len = ftell(fp);
