@@ -17,6 +17,20 @@ struct sge_init_struct {
 };
 
 /*
+	SGE object prototype.
+*/
+
+struct sge_object_prototype {
+	unsigned int m_vao; //Vertex Array Object.
+	unsigned int m_vbos[32]; //VBOs
+	unsigned int m_program; //compiled shader program.
+	unsigned int m_shaders[16]; //shaders.
+	void* udata; //user data
+};
+
+
+
+/*
     required version: 0.0.1
     description: Update callback (used for render/events multithreading)
 */
