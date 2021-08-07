@@ -1,2 +1,7 @@
 #include "internal.h"
-#include "glad.h"
+#include "../lib/glad/glad.h"
+#include "../include/sge.h"
+
+
+
+void 
