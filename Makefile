@@ -5,6 +5,7 @@ INC	= -I./include -I./lib/glfw/include -I./lib/glad -I./lib/cjson
 CFLAGS = -Wall -Wextra -O4 -DENGINE_BUILD $(INC) -fpic -fvisibility=hidden
 ifeq ($(UNAME),Linux)
 	TARGET = sge64.so
+	LINKYDINK = -lgl -l
 else
 	TARGET = sge64.dll
 endif
