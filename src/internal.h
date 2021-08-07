@@ -3,6 +3,8 @@
 
 #ifdef __GNUC__
 #define PUBLIC  __attribute__((visibility("default")))
+#elif _MSC_VER
+#define PUBLIC  __declspec(dllexport)
 #else
 #error unsupported compiler
 #endif
