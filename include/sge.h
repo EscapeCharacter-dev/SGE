@@ -20,11 +20,14 @@ typedef struct {
 	SGE object prototype.
 */
 
+#define SGE_OBJECT_MAX_VBOS 32
+#define SGE_OBJECT_MAX_SHADERS 16
+
 typedef struct  {
 	unsigned int m_vao; //Vertex Array Object.
-	unsigned int m_vbos[32]; //VBOs
+	unsigned int m_vbos[SGE_OBJECT_MAX_VBOS]; //VBOs
 	unsigned int m_program; //compiled shader program.
-	unsigned int m_shaders[16]; //shaders.
+	unsigned int m_shaders[SGE_OBJECT_MAX_SHADERS]; //shaders.
 	void* udata; //user data
 } sge_object_prototype;
 
