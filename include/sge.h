@@ -67,6 +67,6 @@ void sge_start(sge_update_callback callback);
     required version: 0.0.1
     description: Loads a shader program
 */
-uint32_t sge_load_shader(const char *json_filepath);
+uint32_t sge_load_shader(const char *json_filepath, uint32_t *out_shader_buffer);
 
 #endif

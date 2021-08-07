@@ -32,7 +32,7 @@ static uint32_t appendp(uint32_t val) {
     return programs_used - 1;
 }
 
-PUBLIC uint32_t sge_load_shader(const char *json_filepath) {
+PUBLIC uint32_t sge_load_shader(const char *json_filepath, uint32_t *out_shader_buffer) {
     FILE *fp = fopen(json_filepath, "r");
     fseek(fp, 0, SEEK_END);
     size_t len = ftell(fp);
@@ -107,14 +107,18 @@ PUBLIC uint32_t sge_load_shader(const char *json_filepath) {
         cJSON_Delete(json);
         return;
     }
-    uint32_t ret = appendp(program);
+    appendp(program);
     for (int j = 0; j < i; j++) free(attributes[j]);
     free(attributes);
     cJSON_Delete(json);
-    return ret;
+    if (out_shader_buffer) {
+        out_shader_buffer[0] = v;
+        out_shader_buffer[1] = f;
+    }
+    return program;
 }
 
 void sge_free_shaders(void) {
-    for (int i = 0; i < 2048; i++) glDeleteProgram(programs[i]);
-    for (int i = objects_used; i > 0; i--) glDeleteShader(objects_used);
+    for (int i = programs_used; i > 0; i--) glDeleteProgram(programs[i]);
+    for (int i = objects_used; i > 0; i--) glDeleteShader(objects[objects_used]);
 }
