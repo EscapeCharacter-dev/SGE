@@ -19,8 +19,11 @@ static void on_error(GLenum source,
     GLsizei length,
     const GLchar *message,
     const void *userParam) {
-    
-    putc(stdout, '<');
+    (void)length;
+    (void)source;
+    (void)userParam;
+
+    putc('<', stdout);
     printf("%d: ", id);
     switch (type) {
     case GL_DEBUG_TYPE_ERROR:
@@ -50,7 +53,7 @@ static void on_error(GLenum source,
     case GL_DEBUG_SEVERITY_HIGH: printf("{HIGH}"); break;
     default: printf("UNKNOWN"); break;
     }
-    putc(stdout, ' ');
+    putc(' ', stdout);
     printf("%s\n", message);
 }
 
