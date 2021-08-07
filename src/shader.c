@@ -6,16 +6,16 @@
 #include <string.h>
 #include <stdlib.h>
 
-uint32_t sge_compile_shader(sge_shader_code *code) {
+uint_t sge_compile_shader(sge_shader_code *code) {
     if (!code) {
         printf("<ERROR> shader code is a null pointer\n");
         exit(1);
     }
 
-    uint32_t shader = glCreateShader(code->type);
+    uint_t shader = glCreateShader(code->type);
     glShaderSource(shader, strlen(code->source), code->source, NULL);
     glCompileShader(shader);
-    uint32_t status;
+    uint_t status;
     static char *errorLog[512];
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
     if (!status) {
@@ -26,17 +26,17 @@ uint32_t sge_compile_shader(sge_shader_code *code) {
     return shader;
 }
 
-uint32_t sge_compile_program(sge_shader_program *program) {
+uint_t sge_compile_program(sge_shader_program *program) {
     if (!program) {
         printf("<ERROR> shader program instance is a null pointer\n");
         exit(1);
     }
 
-    uint32_t p = glCreateProgram();
+    uint_t p = glCreateProgram();
     for (int i = 0; i < program->shader_count; i++) {
         glAttachShader(p, sge_compile_shader(&program->arr[i]));
     }
-    uint32_t status;
+    uint_t status;
     static char *errorLog[512];
     glGetProgramiv(p, GL_LINK_STATUS, &status);
     if (!status) {
@@ -66,11 +66,11 @@ void sge_shader_source(const char *filepath, sge_shader_code *code) {
     code->source = buf;
 }
 
-void sge_shader_program_free(uint32_t program) {
+void sge_shader_program_free(uint_t program) {
     glDeleteProgram(program);
 }
 
-void sge_shader_free(uint32_t *shaders, uint32_t shader_count) {
+void sge_shader_free(uint_t *shaders, uint_t shader_count) {
     if (!shaders) {
         printf("<ERROR> shader array in sge_shader_free() is a null pointer\n");
         exit(1);
