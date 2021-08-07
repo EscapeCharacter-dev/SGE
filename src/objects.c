@@ -88,6 +88,7 @@ void initArrayBuffer(
 		exit(1);
 	}
 	/*We have a valid index and VBO in that index, now we set it up.*/
+	dest->m_vboflags[index] = vboflags;
 	glBindBuffer(GL_ARRAY_BUFFER, dest->m_vbos[index]);
 	if(vboflags == 1 || vboflags == 16) /*float or int. Assumed to be the same size... because they are in OpenGL.*/
 	{
@@ -141,10 +142,11 @@ void initElementArrayBuffer( /*Index buffer.*/
 		exit(1);
 	}
 	/*We have a valid index and VBO in that index, now we set it up.*/
+	dest->m_vboflags[index] = 16; /*int*/
 	glBindBuffer(GL_ARRAY_BUFFER, dest->m_vbos[index]);
 	/*assert(sizeof(float) == sizeof(int));*/
 	glBufferData(
 		GL_ELEMENT_ARRAY_BUFFER, 
-		elems* sizeof(float), init_data, is_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW
+		elems* sizeof(int), init_data, is_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW
 	);
 }
