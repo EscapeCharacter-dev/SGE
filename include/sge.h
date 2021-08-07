@@ -7,14 +7,14 @@
     required version: 0.0.1
     description: Initialization structure
 */
-struct sge_init_struct {
+typedef struct sge_init_struct {
     const char *title;
     int         wW; // Window Width
     int         wH; // Window Height
     int         vW; // Viewport Width
     int         vH; // Viewport Height
     bool_t      fs; // Fullscreen
-};
+} sge_init_struct;
 
 /*
     required version: 0.0.1
