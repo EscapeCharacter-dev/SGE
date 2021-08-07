@@ -15,10 +15,12 @@ SOURCES = $(wildcard src/*.c)
 OBJECTS = $(patsubst src/%.c, obj/%.o, $(SOURCES))
 
 $(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) -shared $^ -o $@  -Wno-undef $(LINKYDINK)
+	$(CC) $(CFLAGS) -shared $(OBJECTS) -o $@  -Wno-undef $(LINKYDINK)
+	ar crs sge64.a $(OBJECTS)
+	rm -f sge64.o
 
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f src/*.o obj/*.o obj/*.dll obj/*.exe obj/*.so
+	rm -f src/*.o obj/*.o obj/*.dll obj/*.exe obj/*.so *.a *.so
