@@ -107,11 +107,11 @@ PUBLIC uint32_t sge_load_shader(const char *json_filepath) {
         cJSON_Delete(json);
         return;
     }
-    uint32_t i = appendp(program);
+    uint32_t ret = appendp(program);
     for (int j = 0; j < i; j++) free(attributes[j]);
     free(attributes);
     cJSON_Delete(json);
-    return i;
+    return ret;
 }
 
 void sge_free_shaders(void) {
