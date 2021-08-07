@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 typedef signed int          bool_t;
+typedef signed int          int_t;
 typedef unsigned int        uint_t;
 typedef void                *handle_t;
 #define TRUE                1

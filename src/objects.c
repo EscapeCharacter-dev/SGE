@@ -10,7 +10,7 @@ void createVAO(sge_object_prototype* dest){
 
 void createVBOS(
 	sge_object_prototype* dest,
-	unsigned int NUM_BUFFERS /*How many buffers you want?*/
+	uint_t NUM_BUFFERS /*How many buffers you want?*/
 ){
 	glBindVertexArray(dest->m_vao);
 	if(NUM_BUFFERS > SGE_OBJECT_MAX_VBOS){
@@ -18,16 +18,16 @@ void createVBOS(
 		exit(1);
 	}
 	glGenBuffers(NUM_BUFFERS, dest->m_vbos); // Make NUM_BUFFERS buffers
-	for(unsigned int i = 0; i < NUM_BUFFERS; i++){
+	for(uint_t i = 0; i < NUM_BUFFERS; i++){
 		dest->m_vboflags[i] = 0;
 	}
 }
 
 void initArrayBuffer(
 	sge_object_prototype* dest,
-	unsigned int index, //index into the vbo array to initialize
-	unsigned int elems,
-	unsigned int vboflags
+	uint_t index, //index into the vbo array to initialize
+	uint_t elems,
+	uint_t vboflags
 ){
 	if(index > SGE_OBJECT_MAX_VBOS){
 		printf("<ERROR> invalid vbo index %u", index);
