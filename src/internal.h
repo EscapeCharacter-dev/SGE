@@ -10,22 +10,7 @@
 #endif
 
 #include "types.h"
-
-/*
-    Shader code
-*/
-typedef struct {
-    char    *source; /* shader source */
-    int     type;    /* shader type */
-} sge_shader_code;
-
-/*
-    Shader program
-*/
-typedef struct {
-    sge_shader_code *arr;           /* array of shader code */
-    int             shader_count;   /* number of shaders */
-} sge_shader_program;
+#include "sge.h"
 
 void sge_shader_free(uint_t *shaders, uint_t shader_count);
 void sge_shader_program_free(uint_t program);

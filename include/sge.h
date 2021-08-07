@@ -37,7 +37,21 @@ typedef struct  {
 	void* udata; //user data
 } sge_object_prototype;
 
+/*
+    Shader code
+*/
+typedef struct {
+    char    *source; /* shader source */
+    int     type;    /* shader type */
+} sge_shader_code;
 
+/*
+    Shader program
+*/
+typedef struct {
+    sge_shader_code *arr;           /* array of shader code */
+    int             shader_count;   /* number of shaders */
+} sge_shader_program;
 
 /*
     required version: 0.0.1
