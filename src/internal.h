@@ -3,6 +3,6 @@
 
 #define PUBLIC  __attribute__((visibility("default")))
 
-void me_free_shaders(void);
+void sge_free_shaders(void);
 
 #endif
