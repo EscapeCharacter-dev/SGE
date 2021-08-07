@@ -16,11 +16,14 @@ OBJECTS = $(patsubst src/%.c, obj/%.o, $(SOURCES))
 
 $(TARGET): $(OBJECTS)
 	$(CC) $(CFLAGS) -shared $(OBJECTS) -o $@  -Wno-undef $(LINKYDINK)
-	ar crs sge64.a $(OBJECTS)
+	$(AR) crs sge64.a $(OBJECTS)
 	rm -f sge64.o
 
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+test:
+	$(CC) test.c sge64.a -lglfw -lm -ldl
+	
 clean:
 	rm -f src/*.o obj/*.o obj/*.dll obj/*.exe obj/*.so *.a *.so
