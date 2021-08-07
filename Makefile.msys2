@@ -1,4 +1,4 @@
-CC	= gcc	# GCC/MinGW
+CC    = gcc    # GCC/MinGW
 
 INC	= -I./include -I./lib/glfw -I./lib/glad -I./lib/cjson
 
@@ -19,6 +19,6 @@ obj/%.o: src/%.c
 
 test: $(TARGET)
 	$(CC) test.c sge64.dll
-	
+    
 clean:
 	rm -f src/*.o obj/*.o obj/*.dll obj/*.exe obj/*.so *.a *.so *.out
