@@ -16,7 +16,7 @@ uint_t sge_compile_shader(sge_shader_code *code) {
     glShaderSource(shader, strlen(code->source), code->source, NULL);
     glCompileShader(shader);
     uint_t status;
-    static char *errorLog[512];
+    static char errorLog[512];
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
     if (!status) {
         glGetShaderInfoLog(shader, 512, NULL, errorLog);
@@ -37,7 +37,7 @@ uint_t sge_compile_program(sge_shader_program *program) {
         glAttachShader(p, sge_compile_shader(&program->arr[i]));
     }
     uint_t status;
-    static char *errorLog[512];
+    static char errorLog[512];
     glGetProgramiv(p, GL_LINK_STATUS, &status);
     if (!status) {
         glGetProgramInfoLog(p, 512, NULL, errorLog);
