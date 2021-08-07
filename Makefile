@@ -26,4 +26,4 @@ test:
 	$(CC) test.c sge64.a -lglfw -lm -ldl
 	
 clean:
-	rm -f src/*.o obj/*.o obj/*.dll obj/*.exe obj/*.so *.a *.so
+	rm -f src/*.o obj/*.o obj/*.dll obj/*.exe obj/*.so *.a *.so *.out
