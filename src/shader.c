@@ -112,6 +112,7 @@ PUBLIC uint32_t sge_load_shader(const char *json_filepath, uint32_t *out_shader_
     }
     *out_shader_count = total_shaders;
     appendp(program);
+    cJSON_Delete(json);
     return program;
 }
 
