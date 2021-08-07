@@ -25,7 +25,7 @@ typedef struct {
 
 typedef struct  {
 	unsigned int m_vao; //Vertex Array Object.
-	unsigned int m_vbos[SGE_OBJECT_MAX_VBOS]; //VBOs
+	unsigned int m_vbos[SGE_OBJECT_MAX_VBOS]; //VBOs corresponding to vertex attribute and ONLY vertex attributes.
 	unsigned int m_vboflags[SGE_OBJECT_MAX_VBOS]; //VBO flags
 	//1: float property
 	//2: vec2 property
