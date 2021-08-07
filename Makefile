@@ -22,7 +22,7 @@ $(TARGET): $(OBJECTS)
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test:
+test: $(TARGET)
 	$(CC) test.c sge64.a -lglfw -lm -ldl
 	
 clean:
