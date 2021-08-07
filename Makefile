@@ -13,7 +13,10 @@ SOURCES = $(wildcard src/*.c)
 OBJECTS = $(patsubst src/%.c, obj/%.o, $(SOURCES))
 
 $(TARGET): $(OBJECTS)
-	$(CC) $(CFLAGS) -shared $^ -o $@ -Wl,--output-def,sge64.def --no-undef -lopengl32 lib/glfw/libglfw3.a -lgdi32 -luser32 -lkernel32
+	$(CC) $(CFLAGS) -shared $^ -o $@ -Wl,sge64.def -Wno-undef -lopengl32 lib/glfw/libglfw3.a -lgdi32 -luser32 -lkernel32
 
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f src/*.o obj/*.o obj/*.dll obj/*.exe obj/*.so
