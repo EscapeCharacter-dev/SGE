@@ -25,12 +25,45 @@ void createVBOS(
 
 
 void bindObject(sge_object_prototype* me){
-	glBindVertexArray(dest->m_vao);
+	glBindVertexArray(me->m_vao);
 	{unsigned int i=0, j=0;
-		for(i=0; i < SGE_OBJECT_MAX_VBOS){
-			
+		for(i=0; i < SGE_OBJECT_MAX_VBOS; i++){
+			if(me->m_vbos[i] == 0) {continue;}
+			glEnableVertexAttribArray(j++);
+			if(me->m_vboflags[i] == 8){ /*mat4.*/
+				glEnableVertexAttribArray(j++);
+				glEnableVertexAttribArray(j++);
+				glEnableVertexAttribArray(j++);
+				/*setup vertex attrib pointers.*/
+				glVertexAttribPointer(j-4, 4, GL_FLOAT, GL_FALSE, 16 * (int)sizeof(GL_FLOAT), 0);
+				glVertexAttribPointer(j-3, 4, GL_FLOAT, GL_FALSE, 16 * (int)sizeof(GL_FLOAT), (void*)(4 * sizeof(GL_FLOAT)));
+				glVertexAttribPointer(j-2, 4, GL_FLOAT, GL_FALSE, 16 * (int)sizeof(GL_FLOAT), (void*)(8 * sizeof(GL_FLOAT)));
+				glVertexAttribPointer(j-1, 4, GL_FLOAT, GL_FALSE, 16 * (int)sizeof(GL_FLOAT), (void*)(12 * sizeof(GL_FLOAT)));
+			} else if(
+				me->m_vboflags[i] == 16 || 
+				me->m_vboflags[i] == 1 ){
+				glVertexAttribPointer(j-1, 
+					1, /*one float*/
+					(me->m_vboflags[i] == 1)?GL_FLOAT:GL_INT, 
+					GL_FALSE, 0, 0
+				);
+			} else if(me->m_vboflags[i] == 2){ /*vec2 attribute.*/
+				glVertexAttribPointer(j-1, 
+					2,  /*two floats*/
+					GL_FLOAT, /*always floating point vec2.*/
+					GL_FALSE, 0, 0
+				);
+			} else if(me->m_vboflags[i] == 4){
+				glVertexAttribPointer(j-1, 
+					4,  /*four floats*/
+					GL_FLOAT, /*always floating point vec2.*/
+					GL_FALSE, 0, 0
+				);				
+			} /*else error*/
 		}
 	}
+	/*TODO: bind shader program if present.*/
+	/*TODO: user callback?*/
 }
 
 
@@ -109,9 +142,9 @@ void initElementArrayBuffer( /*Index buffer.*/
 	}
 	/*We have a valid index and VBO in that index, now we set it up.*/
 	glBindBuffer(GL_ARRAY_BUFFER, dest->m_vbos[index]);
-		/*assert(sizeof(float) == sizeof(int));*/
-		glBufferData(
-			GL_ELEMENT_ARRAY_BUFFER, 
-			elems* sizeof(float), init_data, is_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW
-		);
+	/*assert(sizeof(float) == sizeof(int));*/
+	glBufferData(
+		GL_ELEMENT_ARRAY_BUFFER, 
+		elems* sizeof(float), init_data, is_static ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW
+	);
 }
