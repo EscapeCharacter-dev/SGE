@@ -6,11 +6,33 @@
 #include <malloc.h>
 #include <string.h>
 
-static uint32_t objects[2048];
+static uint32_t *objects = 0;
 static uint16_t objects_used = 0;
-static uint32_t programs[2048];
+static uint32_t *programs = 0;
+static uint16_t programs_used = 0;
 
-PUBLIC void sge_load_shader(const char *json_filepath) {
+static void appendo(uint32_t val) {
+    if (!objects) {
+        objects = malloc(sizeof(uint32_t));
+    } else {
+        objects = realloc(objects, sizeof(uint32_t) * (objects_used + 2));
+    }
+
+    objects[objects_used++] = val;
+}
+
+static uint32_t appendp(uint32_t val) {
+    if (!programs) {
+        programs = malloc(sizeof(uint32_t));
+    } else {
+        programs = realloc(programs, sizeof(uint32_t) * (programs_used + 2));
+    }
+
+    objects[programs_used++] = val;
+    return programs_used - 1;
+}
+
+PUBLIC uint32_t sge_load_shader(const char *json_filepath) {
     FILE *fp = fopen(json_filepath, "r");
     fseek(fp, 0, SEEK_END);
     size_t len = ftell(fp);
@@ -20,11 +42,9 @@ PUBLIC void sge_load_shader(const char *json_filepath) {
     fclose(fp);
     const cJSON *json = cJSON_Parse(buf);
     free(buf);
-    const cJSON *jindex = cJSON_GetObjectItem(json, "index");
     const cJSON *jvert = cJSON_GetObjectItem(json, "vertex");
     const cJSON *jfrag = cJSON_GetObjectItem(json, "fragment");
     const cJSON *jattr = cJSON_GetObjectItem(json, "attributes");
-    uint32_t index = jindex->valueint;
     const char *v_path = jvert->valuestring;
     const char *f_path = jfrag->valuestring;
     cJSON *attribute;
@@ -56,7 +76,7 @@ PUBLIC void sge_load_shader(const char *json_filepath) {
         cJSON_Delete(json);
         return;
     }
-    objects[objects_used++] = v;
+    appendo(v);
     fp = fopen(f_path, "r");
     fseek(fp, 0, SEEK_END);
     len = ftell(fp);
@@ -75,7 +95,7 @@ PUBLIC void sge_load_shader(const char *json_filepath) {
         cJSON_Delete(json);
         return;
     }
-    objects[objects_used++] = f;
+    appendo(f);
     uint32_t program = glCreateProgram();
     glAttachShader(program, v);
     glAttachShader(program, f);
@@ -87,9 +107,11 @@ PUBLIC void sge_load_shader(const char *json_filepath) {
         cJSON_Delete(json);
         return;
     }
+    uint32_t i = appendp(program);
     for (int j = 0; j < i; j++) free(attributes[j]);
     free(attributes);
     cJSON_Delete(json);
+    return i;
 }
 
 void sge_free_shaders(void) {
